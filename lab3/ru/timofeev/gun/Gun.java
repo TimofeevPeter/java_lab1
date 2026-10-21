@@ -4,7 +4,7 @@ public class Gun extends Weapon {
     private final int fullammo;
 
     public Gun(int fullammo, int ammo) {
-        super(ammo < 1 ? 1 : ammo);  // ru.timofeev.gun.Weapon требует ammo >= 1
+        super(ammo < 1 ? 1 : ammo);
         if (fullammo <= 0) {
             throw new IllegalArgumentException("Максимальное количество патронов должно быть больше 0.");
         }
@@ -15,7 +15,8 @@ public class Gun extends Weapon {
             throw new IllegalArgumentException("Начальное количество патронов не может превышать максимальное.");
         }
         this.fullammo = fullammo;
-        // Если ammo был 0, обнуляем через getAmmo() родителя
+
+        //обнуляем с помощью класса
         if (ammo == 0) {
             getAmmo();
         }
@@ -25,7 +26,7 @@ public class Gun extends Weapon {
     public void shoot() {
         if (ammo() > 0) {
             System.out.println("Бах!");
-            getAmmo();  // метод родителя: уменьшает ammo на 1
+            getAmmo();
         } else {
             System.out.println("Клац!");
         }
@@ -38,7 +39,7 @@ public class Gun extends Weapon {
         int current = ammo();
         int freeSpace = fullammo - current;
         if (count <= freeSpace) {
-            load(current + count);  // метод родителя: устанавливает ammo
+            load(current + count);  // устанавливает магаз
             return 0;
         } else {
             load(fullammo);
@@ -49,7 +50,7 @@ public class Gun extends Weapon {
     public int unload() {
         int taken = ammo();
         while (ammo() > 0) {
-            getAmmo();  // уменьшаем пока не станет 0
+            getAmmo();  // разряжает магаз
         }
         return taken;
     }
